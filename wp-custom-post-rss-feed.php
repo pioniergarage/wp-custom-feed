@@ -1,21 +1,20 @@
 <?php
 /*
-Plugin Name: WP Custom Post RSS Feed
-Plugin URI: http://www.netattingo.com/
+Plugin Name: PG Custom RSS Feed
+Plugin URI: https://github.com/pioniergarage/wp-custom-feed
 Description: Plugin helps to generate xml feeds of post/page/custom post.  
-Author: NetAttingo Technologies
-Version: 1.0.0
-Author URI: http://www.netattingo.com/
+Author: Dominic Seitz
+Version: 1.0.1
+Author URI: https://github.com/dome4
 */
 
 
 define('WPCPRF_PAGE_DIR', plugin_dir_path(__FILE__).'pages/');
 
-//Include menu and assign page
+// Include plugin settings page in wordpress settings
 function wpcprf_plugin_menu() {
- 
-	add_menu_page("Custom Post RSS Feeds", "Custom Post RSS Feeds", "administrator", "wpcpf-settings-page", "wpcprf_plugin_pages", 'dashicons-rss' ,38);
-	add_submenu_page("wpcpf-settings-page", "About Us", "About Us", "administrator", "wpcpf-about-us", "wpcprf_plugin_pages");
+
+    add_options_page( "Custom RSS Feed", "Custom RSS Feed", "administrator", "wpcpf-settings-page", "wpcprf_plugin_pages");
 }
 
 add_action("admin_menu", "wpcprf_plugin_menu");
@@ -31,7 +30,7 @@ function wpcprf_plugin_pages() {
 add_filter( 'page_template', 'feed_page_template' );
 function feed_page_template( $page_template )
 {  
-    if ( is_page( 'media-rss' ) ) { 
+    if ( is_page( 'pg-rss' ) ) {
         $page_template = plugin_dir_path(__FILE__) . 'pages/custom-feed.php';
     }
     return $page_template;
@@ -41,8 +40,8 @@ function feed_page_template( $page_template )
 
 //create feed page start
 function check_page_feed_page_exist(){
-	if( get_page_by_title( 'media-rss' ) == NULL ){
-	 create_pages_feed( 'media-rss' );
+	if( get_page_by_title( 'pg-rss' ) == NULL ){
+	 create_pages_feed( 'pg-rss' );
 	}
 }
 
@@ -51,7 +50,7 @@ add_action('init','check_page_feed_page_exist');
 function create_pages_feed($pageName) {
 	$createPage = array(
 	  'post_title'    => $pageName,
-	  'post_content'  => 'Starter content',
+	  'post_content'  => 'PG Custom Feed Page',
 	  'post_status'   => 'publish',
 	  'post_author'   => 1,
 	  'post_type'     => 'page',
