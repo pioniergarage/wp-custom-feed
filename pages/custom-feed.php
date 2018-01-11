@@ -54,7 +54,7 @@ echo "<?xml version='1.0' encoding='UTF-8'?>
         <pubDate><?php echo mysql2date('D, d M Y H:i:s +0000', get_post_time('Y-m-d H:i:s', true), false); ?></pubDate>
         <guid><?php the_permalink_rss(); ?></guid>
 
-        <description><![CDATA[<?php the_content();//the_excerpt_rss(); ?>]]></description>
+        <description><![CDATA[<?php the_content('(Jetzt weiterlesen)');//the_excerpt_rss(); ?>]]></description>
         <?php rss_enclosure(); ?>
         <?php do_action('rss2_item'); ?>
         </item>
